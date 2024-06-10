@@ -1,6 +1,7 @@
 module []
 
-import Sort exposing [quicksort, mergesort, compareNum, reverseNum, compareStr, reverseStr]
+import Sort exposing [quicksort, mergesort]
+import Compare exposing [compareNum, compareStr, reverseNum, reverseStr]
 
 # TESTS: quicksort, compareNum, reverseNum
 expect quicksort [] compareNum == []
@@ -86,4 +87,3 @@ expect
     sorted = mergesort ["hello world", "hello, world", "Hello, world", "Hello, World", "hello, world!", "Hello, world!", "Hello, World!", "\"Hello, World!\""] compareStr
     sorted == ["\"Hello, World!\"", "Hello, World", "Hello, World!", "Hello, world", "Hello, world!", "hello world", "hello, world", "hello, world!"]
     && mergesort sorted reverseStr == ["hello, world!", "hello, world", "hello world", "Hello, world!", "Hello, world", "Hello, World!", "Hello, World", "\"Hello, World!\""]
-

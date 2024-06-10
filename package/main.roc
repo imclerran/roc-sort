@@ -1,1 +1,1 @@
-package [Sort] {}
+package [Sort, Compare] {}
