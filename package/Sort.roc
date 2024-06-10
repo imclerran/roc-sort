@@ -1,7 +1,8 @@
-module [quicksort, mergesort]
+module [quicksort, mergesort, sortNums, reverseNums, sortStrs, reverseStrs]
 
 import Unsafe exposing [unwrap]
 # import Compare exposing [CompareFn] # cannot import CompareFn from compare module -> causes compiler error
+import Compare exposing [compareStr, compareNum, reverseStr, reverseNum]
 CompareFn a : a, a -> I64
 
 quicksort : List a, CompareFn a -> List a
@@ -50,3 +51,15 @@ merge = \left, right, compare ->
         (_,_) -> 
             # The previous cases should be exhaustive, but the compiler complains without this.
             crash "merge: The previous cases should be exhaustive." 
+
+sortNums : List (Num *) -> List (Num *)
+sortNums = \list -> mergesort list compareNum
+
+reverseNums : List (Num *) -> List (Num *)
+reverseNums = \list -> mergesort list reverseNum
+
+sortStrs : List (Str *) -> List (Str *)
+sortStrs = \list -> mergesort list compareStr
+
+reverseStrs : List (Str *) -> List (Str *)
+reverseStrs = \list -> mergesort list reverseStr
