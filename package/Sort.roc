@@ -1,11 +1,9 @@
-module [quicksort, mergesort, sortNums, reverseNums, sortStrs, reverseStrs]
+module [quicksort, mergesort, sortNums, sortNumsRev, sortStrs, sortStrsRev]
 
 import Unsafe exposing [unwrap]
-# import Compare exposing [CompareFn] # cannot import CompareFn from compare module -> causes compiler error
 import Compare exposing [compareStr, compareNum, reverseStr, reverseNum]
-CompareFn a : a, a -> I64
 
-quicksort : List a, CompareFn a -> List a
+quicksort : List a, (a, a -> I64) -> List a
 quicksort = \list, compare ->
     if List.len list < 2 then
         list
@@ -18,7 +16,7 @@ quicksort = \list, compare ->
             if i == pivotIdx || compare x pivot <= 0 then xs else List.append xs x
         List.join [quicksort before compare, [pivot], quicksort after compare]
 
-mergesort : List a, CompareFn a -> List a
+mergesort : List a, (a, a -> I64) -> List a
 mergesort = \list, compare ->
     if List.len list < 2 then
         list
@@ -27,7 +25,7 @@ mergesort = \list, compare ->
         { before, others } = List.split list midpoint
         merge (mergesort before compare) (mergesort others compare) compare
 
-merge : List a, List a, CompareFn a -> List a
+merge : List a, List a, (a, a -> I64) -> List a
 merge = \left, right, compare ->
     when (left, right) is
         ([], _) -> right
@@ -52,14 +50,14 @@ merge = \left, right, compare ->
             # The previous cases should be exhaustive, but the compiler complains without this.
             crash "merge: The previous cases should be exhaustive." 
 
-sortNums : List (Num *) -> List (Num *)
+sortNums : List (Num a) -> List (Num a)
 sortNums = \list -> mergesort list compareNum
 
-reverseNums : List (Num *) -> List (Num *)
-reverseNums = \list -> mergesort list reverseNum
+sortNumsRev : List (Num a) -> List (Num a)
+sortNumsRev = \list -> mergesort list reverseNum
 
-sortStrs : List (Str *) -> List (Str *)
+sortStrs : List (Str a) -> List (Str a)
 sortStrs = \list -> mergesort list compareStr
 
-reverseStrs : List (Str *) -> List (Str *)
-reverseStrs = \list -> mergesort list reverseStr
+sortStrsRev : List (Str a) -> List (Str a)
+sortStrsRev = \list -> mergesort list reverseStr

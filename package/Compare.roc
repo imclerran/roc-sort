@@ -1,14 +1,12 @@
-module [CompareFn, compareNum, reverseNum, compareStr, reverseStr]
+module [compareNum, reverseNum, compareStr, reverseStr]
 
-CompareFn a : a, a -> I64
-
-compareNum : CompareFn (Num *)
+compareNum : Num a, Num a -> I64
 compareNum = \a, b -> if a < b then -1 else if a > b then 1 else 0
 
-reverseNum : CompareFn (Num *)
+reverseNum : Num a, Num a -> I64
 reverseNum = \a, b -> compareNum b a
 
-compareStr : CompareFn Str
+compareStr : Str, Str -> I64
 compareStr = \a, b -> 
     if a == b then 0
     else
@@ -18,5 +16,5 @@ compareStr = \a, b ->
             if byteA < byteB then -1 else if byteA > byteB then 1 else 0
         (List.findFirst compList \comp -> comp != 0) |> Result.withDefault (Num.toI64 (List.len bytesA) - Num.toI64 (List.len bytesB))
     
-reverseStr : CompareFn Str
+reverseStr : Str, Str -> I64
 reverseStr = \a, b -> compareStr b a
