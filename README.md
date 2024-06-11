@@ -17,6 +17,17 @@ The currently available sorting algorithms are:
 
 The package also provides some single argument sort functions, which do not require passing in a compare function. These use mergesort to sort numbers and strs, and have both standard and reverse sorting versions.
 
+## Usage
+Sorting a list of `Str` can be done with:
+
+`roc repl`
+```roc
+import Sort exposing [sortStrs]
+["world!", "Hello, "] |> sortStrs |> Str.joinWith ""
+
+"Hello, world!" : Str
+```
+
 [roc_badge]: https://img.shields.io/endpoint?url=https%3A%2F%2Fpastebin.com%2Fraw%2FGcfjHKzb
 [roc_link]: https://github.com/roc-lang/roc
 [ci_status_badge]: https://img.shields.io/github/actions/workflow/status/imclerran/roc-sort/ci.yaml
