@@ -5,9 +5,7 @@
 
 A collection of sorting algorithms for [roc-lang](https://github.com/roc-lang/roc), as well as compare functions for both `Num` and `Str` types.
 
-The roc List module currently can only sort List of type `Num *`, so this package adds sorting for generic lists with a user defined compare function, as well as providing sort and compare functions for `Str` and `Num *`.
-
-to sort any type besides `Str` or `Num *`, simply define a compare function:
+To sort any type besides `Str` or `Num *`, simply define a compare function:
 ```roc
 compare : a, a -> U64
 ```
