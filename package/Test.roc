@@ -41,6 +41,9 @@ expect
 expect 
     quicksort ["a", "A", "!", "0"] compareStr == ["!", "0", "A", "a"]
     && quicksort ["a", "A", "!", "0"] reverseStr == ["a", "A", "0", "!"]
+expect
+    quicksort ["A", "a", "a", "A"] compareStr == ["A", "A", "a", "a"]
+    && quicksort ["A", "a", "a", "A"] reverseStr == ["a", "a", "A", "A"]
 expect 
     sorted = quicksort ["hello world", "hello, world", "Hello, world", "Hello, World", "hello, world!", "Hello, world!", "Hello, World!", "\"Hello, World!\""] compareStr 
     sorted == ["\"Hello, World!\"", "Hello, World", "Hello, World!", "Hello, world", "Hello, world!", "hello world", "hello, world", "hello, world!"]
@@ -83,6 +86,9 @@ expect
 expect
     mergesort ["a", "A", "!", "0"] compareStr == ["!", "0", "A", "a"]
     && mergesort ["a", "A", "!", "0"] reverseStr == ["a", "A", "0", "!"]
+expect
+    mergesort ["A", "a", "a", "A"] compareStr == ["A", "A", "a", "a"]
+    && mergesort ["A", "a", "a", "A"] reverseStr == ["a", "a", "A", "A"]
 expect
     sorted = mergesort ["hello world", "hello, world", "Hello, world", "Hello, World", "hello, world!", "Hello, world!", "Hello, World!", "\"Hello, World!\""] compareStr
     sorted == ["\"Hello, World!\"", "Hello, World", "Hello, World!", "Hello, world", "Hello, world!", "hello world", "hello, world", "hello, world!"]
