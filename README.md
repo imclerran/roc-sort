@@ -38,5 +38,5 @@ import Sort exposing [sortStrs]
 [ci_status_badge]: https://img.shields.io/github/actions/workflow/status/imclerran/roc-sort/ci.yaml?logo=github&logoColor=lightgrey
 [ci_status_link]: https://github.com/imclerran/roc-sort/actions/workflows/ci.yaml
 
-[last_commit_badge]: https://img.shields.io/github/last-commit/imclerran/roc-sort
+[last_commit_badge]: https://img.shields.io/github/last-commit/imclerran/roc-sort?logo=git&logoColor=lightgrey
 [last_commit_link]: https://github.com/imclerran/roc-sort/commits/main/
