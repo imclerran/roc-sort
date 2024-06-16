@@ -7,12 +7,12 @@ A collection of sorting algorithms for [roc-lang](https://github.com/roc-lang/ro
 
 To sort any type besides `Str` or `Num *`, simply define a compare function:
 ```roc
-compare : a, a -> U64
+compare : a, a -> [LT, EQ, GT]
 ```
-where a is:
-- `0` if the elements are equal
-- `< 0` if the first element sorts first
-- `> 0` if the first element sorts last
+Where the return is:
+- `EQ` if the elements are equal
+- `LT` if the first element sorts first
+- `GT` if the first element sorts last
 
 ## Algorithms
 The currently available sorting algorithms are:
