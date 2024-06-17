@@ -1,7 +1,9 @@
-module [compareNum, reverseNum, compareStr, reverseStr]
+module [num, str, compareNum, reverseNum, compareStr, reverseStr]
 
 compareNum : Num a, Num a -> [LT, EQ, GT]
 compareNum = \a, b -> if a < b then LT else if a > b then GT else EQ
+
+num = compareNum
 
 reverseNum : Num a, Num a -> [LT, EQ, GT]
 reverseNum = \a, b -> compareNum b a
@@ -16,6 +18,8 @@ compareStr = \a, b ->
             if byteA < byteB then LT else if byteA > byteB then GT else EQ
         (List.findFirst compList \comp -> comp != EQ) 
         |> Result.withDefault (Num.toI64 (List.len bytesA) - Num.toI64 (List.len bytesB) |> numToComparator)
+
+str = compareStr
     
 reverseStr : Str, Str -> [LT, EQ, GT]
 reverseStr = \a, b -> compareStr b a
