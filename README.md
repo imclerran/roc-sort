@@ -53,14 +53,14 @@ benchmark $ ./sort-bench 10k
 
 benchmark $ ./sort-bench 100k
 ----------------------------------
-> List.sortWith: sorted 100k elements in 125ms
+> List.sortWith: sorted 100k elements in 117ms
 ----------------------------------
-> Sort.quicksort: sorted 100k elements in 247ms
+> Sort.quicksort: sorted 100k elements in 248ms
 ----------------------------------
-> Sort.mergesort: zsh: segmentation fault  ./sort-bench 100k
+> Sort.mergesort: sorted 100k elements in 122340ms
 ```
 
-As can be seen here, quicksort is slightly behind the built in sort function. While not shown here, the best case for quicksort is about an order of magnitude better the built in function. However mergesort is an order of magnitude worse in all cases, and segfaults for large lists. As such, merge sort clearly has some issues which need work.
+As can be seen here, quicksort is slightly behind the built in sort function. While not shown here, the best case for quicksort is about an order of magnitude better the built in function. However mergesort is at least an order of magnitude (or several) worse, and required a quadrupling of the stack size to complete the 100k list.
 
 [roc_badge]: https://img.shields.io/endpoint?url=https%3A%2F%2Fpastebin.com%2Fraw%2FcFzuCCd7
 [roc_link]: https://github.com/roc-lang/roc
