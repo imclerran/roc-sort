@@ -3,7 +3,7 @@
 [![GitHub last commit][last_commit_badge]][last_commit_link]
 [![CI status][ci_status_badge]][ci_status_link]
 
-A collection of sorting algorithms for [roc-lang](https://github.com/roc-lang/roc), as well as compare functions for both `Num` and `Str` types.
+A collection of sorting algorithms for [roc-lang](https://github.com/roc-lang/roc), as well as compare functions for both `Num` and `Str` types. Mostly written for proof of concept. Merge sort is baaaaad... see benchmarks below.
 
 To sort any type besides `Str` or `Num *`, simply define a compare function:
 ```roc
