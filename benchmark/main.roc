@@ -34,7 +34,7 @@ run = \size ->
         Stdout.line! "----------------------------------"
         Stdout.write! "> $(name): "
         time = benchSortFunc! sort strs
-        Stdout.line "sorted $(size) elements in $(numWithCommas time) ms"   
+        Stdout.line "sorted $(size) elements in $(numWithCommas time)ms"   
     Stdout.line! "\n"  
 
 readFile = \filename -> 
