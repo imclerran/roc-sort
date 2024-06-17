@@ -24,7 +24,7 @@ main =
 
 run : Str -> Task {} _
 run = \size ->
-    strs = readFile! "$(size)_cities-shuffled.csv"
+    strs = readFile! "$(size).csv"
     sortFuncs = [
         ("List.sortWith", List.sortWith), 
         ("Sort.quicksort", Sort.quicksort),
@@ -34,7 +34,7 @@ run = \size ->
         Stdout.line! "----------------------------------"
         Stdout.write! "> $(name): "
         time = benchSortFunc! sort strs
-        Stdout.line "sorted $(size) elements in $(Num.toStr time)ms"   
+        Stdout.line "sorted $(size) elements in $(numWithCommas time) ms"   
     Stdout.line! "\n"  
 
 readFile = \filename -> 
@@ -50,3 +50,20 @@ benchSortFunc = \sort, strs ->
     end = Utc.now!
     Utc.deltaAsMillis start end |> Task.ok
 
+numWithCommas = \num ->
+    numStr = Num.toStr num
+    if Str.countUtf8Bytes numStr > 3 then
+        numStr
+        |> Str.toUtf8 
+        |> List.reverse
+        |> List.chunksOf 3
+        |> List.map Str.fromUtf8 
+        |> List.map \r -> Result.withDefault r ""
+        |> Str.joinWith ","
+        |> Str.toUtf8
+        |> List.reverse
+        |> Str.fromUtf8
+        |> Result.withDefault ""
+    else
+        numStr
+    
