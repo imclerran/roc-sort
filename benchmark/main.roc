@@ -1,69 +1,76 @@
-app [main] {
-    cli: platform "https://github.com/roc-lang/basic-cli/releases/download/0.10.0/vNe6s9hWzoTZtFmNkvEICPErI9ptji_ySjicO6CkucY.tar.br",
+app [main!] {
+    cli: platform "https://github.com/roc-lang/basic-cli/releases/download/0.19.0/Hj-J_zxz7V9YurCSTFcFdu6cQJie4guzsPMUi5kBYUk.tar.br",
     sort: "../package/main.roc",
 }
 
 import cli.Stdout
-import cli.Task exposing [Task]
 import cli.File
-import cli.Path
 import cli.Utc
 import cli.Arg
 import sort.Sort
 import sort.Compare
 
-main : Task {} _
-main =
-    args = Arg.list |> Task.onErr! \_ -> Task.ok []
-    when args is
-        [_, "1k", ..] -> run "1k"
-        [_, "10k", ..] -> run "10k"
-        [_, "100k", ..] -> run "100k"
-        [_, "1m", ..] -> run "1m"
-        _ -> Stdout.line! "Usage: sort-bench <1k/10k/100k/1m>"
+main! = |args|
+    when args |> List.map(Arg.display) is
+        [_, "1k", ..] -> run!("1k")
+        [_, "10k", ..] -> run!("10k")
+        [_, "100k", ..] -> run!("100k")
+        [_, "1m", ..] -> run!("1m")
+        _ -> Stdout.line!("Usage: sort-bench <1k/10k/100k/1m>")
 
-run : Str -> Task {} _
-run = \size ->
-    strs = readFile! "$(size).csv"
-    sortFuncs = [
-        ("List.sortWith", List.sortWith), 
+run! = |size|
+    strs = read_file!("${size}.csv")?
+    sort_funcs = [
+        ("List.sortWith", List.sort_with),
         ("Sort.quicksort", Sort.quicksort),
         ("Sort.mergesort", Sort.mergesort),
-    ] 
-    Task.forEach! sortFuncs \(name, sort) -> 
-        Stdout.line! "----------------------------------"
-        Stdout.write! "> $(name): "
-        time = benchSortFunc! sort strs
-        Stdout.line "sorted $(size) elements in $(numWithCommas time)ms"   
-    Stdout.line! "\n"  
+    ]
+    _ = List.for_each_try!(
+        sort_funcs,
+        |(name, sort)|
+            Stdout.line!("--------------------------------------------------")?
+            Stdout.write!("> ${name}, str: ")?
+            time = bench_sort_func!(sort, strs)
+            Stdout.line!("sorted ${size} elements in ${num_with_commas(time)}ms")
+            # Stdout.write!("> ${name}, str2: ")?
+            # time2 = bench_sort_func_with_str2!(sort, strs)
+            # Stdout.line!("sorted ${size} elements in ${num_with_commas(time2)}ms"),
+    )
+    Stdout.line!("\n")
 
-readFile = \filename -> 
-    bytes = File.readBytes! (Path.fromStr filename)
-    Str.fromUtf8 bytes 
-    |> Result.withDefault ""
-    |> Str.split "\n"
-    |> Task.ok
+read_file! = |filename|
+    bytes = File.read_bytes!(filename)?
+    Str.from_utf8(bytes)
+    |> Result.with_default("")
+    |> Str.split_on("\n")
+    |> Ok
 
-benchSortFunc = \sort, strs ->
-    start = Utc.now!
-    _ = sort strs Compare.str
-    end = Utc.now!
-    Utc.deltaAsMillis start end |> Task.ok
+bench_sort_func! = |sort, strs|
+    start = Utc.now!({})
+    _ = sort(strs, Compare.str)
+    end = Utc.now!({})
+    Utc.delta_as_millis(start, end)
 
-numWithCommas = \num ->
-    numStr = Num.toStr num
-    if Str.countUtf8Bytes numStr > 3 then
-        numStr
-        |> Str.toUtf8 
+# bench_sort_func_with_str2! = |sort, strs|
+#     start = Utc.now!({})
+#     _ = sort(strs, Compare.str2)
+#     end = Utc.now!({})
+#     Utc.delta_as_millis(start, end)
+
+num_with_commas = |num|
+    num_str = Num.to_str(num)
+    if Str.count_utf8_bytes(num_str) > 3 then
+        num_str
+        |> Str.to_utf8
         |> List.reverse
-        |> List.chunksOf 3
-        |> List.map Str.fromUtf8 
-        |> List.map \r -> Result.withDefault r ""
-        |> Str.joinWith ","
-        |> Str.toUtf8
+        |> List.chunks_of(3)
+        |> List.map(Str.from_utf8)
+        |> List.map(|r| Result.with_default(r, ""))
+        |> Str.join_with(",")
+        |> Str.to_utf8
         |> List.reverse
-        |> Str.fromUtf8
-        |> Result.withDefault ""
+        |> Str.from_utf8
+        |> Result.with_default("")
     else
-        numStr
-    
+        num_str
+

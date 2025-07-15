@@ -26,8 +26,8 @@ Sorting a list of `Str` can be done with:
 
 `roc repl`
 ```roc
-import Sort exposing [sortStrs]
-["world!", "Hello, "] |> sortStrs |> Str.joinWith ""
+import Sort exposing [sort_strs]
+["world!", "Hello, "] |> sort_trs |> Str.joinWith("")
 
 "Hello, world!" : Str
 ```
@@ -35,32 +35,32 @@ import Sort exposing [sortStrs]
 ## Benchmarks
 Below are benchmarks of my sort functions against the builtin List.sortWith function:
 ```
-benchmark $ ./sort-bench 1k
-----------------------------------
-> List.sortWith: sorted 1k elements in 1ms
-----------------------------------
-> Sort.quicksort: sorted 1k elements in 3ms
-----------------------------------
-> Sort.mergesort: sorted 1k elements in 26ms
+benchmark $ ./benchmark.sh
+--------------------------------------------------
+> List.sortWith, str: sorted 1k elements in 0ms
+--------------------------------------------------
+> Sort.quicksort, str: sorted 1k elements in 1ms
+--------------------------------------------------
+> Sort.mergesort, str: sorted 1k elements in 1ms
 
-benchmark $ ./sort-bench 10k
-----------------------------------
-> List.sortWith: sorted 10k elements in 18ms
-----------------------------------
-> Sort.quicksort: sorted 10k elements in 31ms
-----------------------------------
-> Sort.mergesort: sorted 10k elements in 1294ms
 
-benchmark $ ./sort-bench 100k
-----------------------------------
-> List.sortWith: sorted 100k elements in 117ms
-----------------------------------
-> Sort.quicksort: sorted 100k elements in 248ms
-----------------------------------
-> Sort.mergesort: sorted 100k elements in 122340ms
+--------------------------------------------------
+> List.sortWith, str: sorted 10k elements in 8ms
+--------------------------------------------------
+> Sort.quicksort, str: sorted 10k elements in 13ms
+--------------------------------------------------
+> Sort.mergesort, str: sorted 10k elements in 51ms
+
+
+--------------------------------------------------
+> List.sortWith, str: sorted 100k elements in 104ms
+--------------------------------------------------
+> Sort.quicksort, str: sorted 100k elements in 157ms
+--------------------------------------------------
+> Sort.mergesort, str: sorted 100k elements in 4,660ms
 ```
 
-As can be seen here, quicksort is slightly behind the built in sort function. While not shown here, the best case for quicksort is about an order of magnitude better the built in function. However mergesort is at least an order of magnitude (or several) worse, and required a quadrupling of the stack size to complete the 100k list.
+As can be seen here, quicksort is slightly behind the built in sort function. While not shown here, the best case for quicksort is about an order of magnitude better the built in function. However mergesort is at least an order of magnitude (or several) worse than the builtin sort_with function.
 
 [roc_badge]: https://img.shields.io/endpoint?url=https%3A%2F%2Fpastebin.com%2Fraw%2FcFzuCCd7
 [roc_link]: https://github.com/roc-lang/roc
